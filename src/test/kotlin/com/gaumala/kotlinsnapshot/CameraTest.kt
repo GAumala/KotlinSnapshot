@@ -10,7 +10,7 @@ class CameraTest {
     fun should_take_snapshots_of_data_classes() {
         val camera = Camera()
 
-        val u1 = User(8, "gabriel")
+        val u1 = User(1, "gabriel")
         camera.matchWithSnapshot("should take snapshot of a data class", u1)
     }
 
