@@ -28,4 +28,7 @@ dependencies {
     testImplementation 'junit:junit:4.12'
 }
 
-
+test {
+   // update snapshots via command line
+   systemProperty "updateSnapshots", System.getProperty("u")
+}
