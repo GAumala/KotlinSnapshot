@@ -41,12 +41,16 @@ class NetworkTest {
     }
 ```
 
-After you run the test for the first time, a new  snapshot will be written in the `__snapshot__` directory of the root of your project. On subsequent tests, the value will be compared with the snapshot stored in the filesystem if the are not equal, your test will fail. The written snapshot for this example would look like this:
+After you run the test for the first time, a new  snapshot will be written in the `__snapshot__` directory of the root of your project. The written snapshot for this example would look like this:
 
 ```bash
 $ cat __snapshot__/should\ fetch\ data\ from\ network.snap 
 {"name":"gabriel","id":5}
 ```
+
+On subsequent runs, the value will be compared with the snapshot stored in the filesystem if the are not equal, your test will fail. To see the detailed error you may need to run your tests with `./gradlew test --info`. You should see something like this:
+
+![Snapshot Error](https://user-images.githubusercontent.com/5729175/37878769-98ef26ae-3033-11e8-8066-ea1e49630de3.png)
 
 You can also specify the path relative to the project's root where you want the snapshot dir to be placed using `Camera`'s constructor:
 
