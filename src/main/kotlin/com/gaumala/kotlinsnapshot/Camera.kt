@@ -9,15 +9,17 @@ import java.util.*
  * Created by gabriel on 3/24/18.
  */
 
-class Camera {
+class Camera(relativePath: String) {
     private val snapshotDir: File
     private val dmp = diff_match_patch()
     init {
         val dir = System.getProperty("user.dir");
-        val snapshotDirPath = Paths.get(dir, "__snapshot__").toString()
+        val snapshotDirPath = Paths.get(dir, relativePath, "__snapshot__").toString()
         snapshotDir = File(snapshotDirPath)
         snapshotDir.mkdirs()
     }
+
+    constructor(): this("")
 
     private val shouldUpdateSnapshots: Boolean by lazy {
         System.getProperty("updateSnapshots") == "1"
