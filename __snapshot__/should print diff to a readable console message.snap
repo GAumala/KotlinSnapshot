@@ -1,0 +1,9 @@
+[31mReceived value[0m does not match [32mstored snapshot: "should print diff to a readable console message"[0m
+
+[32m-Snapshot[0m
+[31m+Received[0m
+
+ {"name":"
+[32m- gabriel
+[0m[31m+ andres
+[0m ","id":5}

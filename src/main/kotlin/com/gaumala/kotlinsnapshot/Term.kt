@@ -3,7 +3,7 @@ package com.gaumala.kotlinsnapshot
 /**
  * Created by gabriel on 3/24/18.
  */
-object Term {
+internal object Term {
     private val RESET = "\u001B[0m";
     private val GREEN = "\u001B[32m"
     private val RED = "\u001B[31m";

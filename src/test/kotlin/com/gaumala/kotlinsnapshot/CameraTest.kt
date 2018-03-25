@@ -14,7 +14,7 @@ class CameraTest {
     }
 
     @Test
-    fun should_take_snapshots_of_lists() {
+    fun should_take_snapshots_of_collections() {
         val list = listOf(
                 User(1, "gabriel"),
                 User(2, "andres"),

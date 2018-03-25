@@ -31,4 +31,6 @@ dependencies {
 test {
    // update snapshots via command line
    systemProperty "updateSnapshots", System.getProperty("u")
+   // purge snapshots via command line
+   systemProperty "purgeSnapshots", System.getProperty("p")
 }

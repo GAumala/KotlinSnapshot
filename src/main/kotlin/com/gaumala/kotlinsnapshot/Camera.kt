@@ -3,7 +3,6 @@ package com.gaumala.kotlinsnapshot
 import name.fraser.neil.plaintext.diff_match_patch
 import java.io.File
 import java.nio.file.Paths
-import java.util.*
 
 /**
  * Created by gabriel on 3/24/18.
@@ -12,34 +11,16 @@ import java.util.*
 class Camera(relativePath: String) {
     private val snapshotDir: File
     private val dmp = diff_match_patch()
+
     init {
-        val dir = System.getProperty("user.dir");
-        val snapshotDirPath = Paths.get(dir, relativePath, "__snapshot__").toString()
-        snapshotDir = File(snapshotDirPath)
-        snapshotDir.mkdirs()
+        snapshotDir = createSnapshotDir(relativePath)
+        purgeSnapshotsIfNeeded(snapshotDir)
     }
 
     constructor(): this("")
 
     private val shouldUpdateSnapshots: Boolean by lazy {
         System.getProperty("updateSnapshots") == "1"
-    }
-
-    private fun printDiff(diff: diff_match_patch.Diff): String =
-            when (diff.operation) {
-                diff_match_patch.Operation.EQUAL, null -> " ${diff.text}\n"
-                diff_match_patch.Operation.DELETE -> Term.green("- ${diff.text}\n")
-                diff_match_patch.Operation.INSERT -> Term.red("+ ${diff.text}\n")
-            }
-
-    private fun createDiffMessage(snapshotName: String, diffs: LinkedList<diff_match_patch.Diff>): String {
-        val sb = StringBuilder("${Term.red("Received value")} does not match ${
-            Term.green("stored snapshot: \"$snapshotName\"")}\n\n${
-            Term.green("-Snapshot")}\n${Term.red("+Received")}\n\n")
-
-        dmp.diff_cleanupSemantic(diffs)
-        diffs.forEach { diff -> sb.append(printDiff(diff)) }
-        return sb.toString()
     }
 
     private fun differsFromSnapshot(diffs: List<diff_match_patch.Diff>): Boolean =
@@ -53,7 +34,7 @@ class Camera(relativePath: String) {
         if (hasChanged && shouldUpdateSnapshots)
             writeSnapshot(true, snapshotFile, value)
         else if (hasChanged) {
-            val msg = createDiffMessage(snapshotFile.name, diffs)
+            val msg = DiffPrinter.toReadableConsoleMessage(snapshotFile.name, diffs)
             throw SnapshotException(diffs, msg)
         }
 
@@ -74,5 +55,27 @@ class Camera(relativePath: String) {
             matchValueWithExistingSnapshot(snapshotFile, value)
         else
             writeSnapshot(false, snapshotFile, value)
+    }
+
+    private companion object {
+        private val purgedDirectories = HashSet<String>()
+        fun createSnapshotDir(relativePath: String): File {
+            val dir = System.getProperty("user.dir");
+            val snapshotDirPath = Paths.get(dir, relativePath, "__snapshot__").toString()
+            val snapshotDir = File(snapshotDirPath)
+            snapshotDir.mkdirs()
+            return snapshotDir
+        }
+
+        fun purgeSnapshotsIfNeeded(snapshotDir: File) {
+            val pathToPurge = snapshotDir.absolutePath
+            val shouldPurge = System.getProperty("purgeSnapshots") == "1"
+                                && ! purgedDirectories.contains(pathToPurge)
+
+            if (shouldPurge) {
+                snapshotDir.deleteAllContainedFiles()
+                purgedDirectories.add(pathToPurge)
+            }
+        }
     }
 }
