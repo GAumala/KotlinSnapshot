@@ -1,4 +1,4 @@
-# KotlinSnapshot
+# KotlinSnapshot [![Build Status](https://travis-ci.org/GAumala/KotlinSnapshot.svg?branch=master)](https://travis-ci.org/GAumala/KotlinSnapshot)
 
 Snapshot testing in Kotlin. The implementation of the diff algorithm used is taken from [diff-match-patch](https://github.com/google/diff-match-patch).
 
