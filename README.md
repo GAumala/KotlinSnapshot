@@ -1,5 +1,4 @@
-# KotlinSnapshot [![Build Status](https://travis-ci.org/GAumala/KotlinSnapshot.svg?branch=master)](https://travis-ci.org/GAumala/KotlinSnapshot)
-
+# KotlinSnapshot [![Build Status](https://travis-ci.org/GAumala/KotlinSnapshot.svg?branch=master)](https://travis-ci.org/GAumala/KotlinSnapshot) 
 Snapshot testing in Kotlin. The implementation of the diff algorithm used is taken from [diff-match-patch](https://github.com/google/diff-match-patch).
 
 
@@ -74,17 +73,30 @@ test {
 }
 ```
 
-Then, when you want to update the snapshot for a specific test: 
-``` bash
-./gradlew test -Du=1 --tests *MyTest.someTestINeedToUpdate
+On android projects you might need to do this instead: 
+
+```build.gradle
+    testOptions {
+        unitTests.all {
+            // update snapshots via command line
+            systemProperty "updateSnapshots", System.getProperty("u")
+        }
+    }
 ```
 
-In this example I use "u" but, it can be any flag, depending on how you configure your gradle file.
+Then, when you want to update the snapshot for a specific test: 
+``` bash
+./gradlew test -Du=1 --info --tests *MyTest.someTestINeedToUpdate
+```
+
+Please note that in this example I used "u" but, it can be any flag, depending on how you configure your gradle file.
+
+On android projects the `test` task might not support the `--tests` flag to filter tests, you might need to run something like `testDebug` instead. It is not necessary to filter tests when updating, but you should do it to avoid inconsistencies.
 
 
 ## Purging Snapshots
 
-As you rename snapshots, old unused snapshots may remain in your project. You can delete all existing snapshots and rebuild the ones that are actually used using the "purgeSnapshots" system property. 
+As you rename snapshots, old unused snapshots may remain in your project. You can delete all existing snapshots and rebuild the ones that are actually used using the "purgeSnapshots" system property. The setup is identical to the one used for updating snapshots.
 
 ``` gradle
 
@@ -94,7 +106,19 @@ test {
 }
 ```
 
+Again android projects may need to handle this differently:
+
+```build.gradle
+    testOptions {
+        unitTests.all {
+            // update snapshots via command line
+            systemProperty "purgeSnapshots", System.getProperty("p")
+        }
+    }
+```
+
+
 Then, when you want to delete the snapshots: 
 ``` bash
-./gradlew test -Dp=1 
+./gradlew test -Dp=1 --info
 ```
