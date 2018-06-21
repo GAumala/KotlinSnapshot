@@ -1,12 +1,9 @@
-package com.gaumala.kotlinsnapshot
+package com.karumi.kotlinsnapshot.core
 
 import org.junit.Test
 
-/**
- * Created by gabriel on 3/25/18.
- */
 class RelativePathCameraTest {
-    private val camera = Camera(relativePath = "src/test/kotlin/com/kotlinsnapshot")
+    private val camera = Camera(relativePath = "src/test/kotlin/com/karumi/kotlinsnapshot/core")
 
     @Test
     fun should_take_snapshots_and_store_them_in_the_provided_relative_path() {
