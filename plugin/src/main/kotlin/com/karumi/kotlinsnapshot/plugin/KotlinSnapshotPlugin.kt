@@ -22,8 +22,9 @@ open class KotlinSnapshotPlugin : Plugin<Project> {
             KotlinSnapshotTask.PurgeSnapshots.name,
             KotlinSnapshotTask.PurgeSnapshots::class.java)
 
-        updateSnapshotsTask.dependsOn("test")
-        purgeSnapshotsTask.dependsOn("test")
+        val testTask = project.tasks.findByName("test")
+        updateSnapshotsTask.finalizedBy(testTask)
+        purgeSnapshotsTask.finalizedBy(testTask)
     }
 
     private fun addKotlinSnapshotDependency(project: Project) {
