@@ -1,5 +1,6 @@
 package com.karumi.kotlinsnapshot.plugin
 
+import com.karumi.kotlinsnapshot.plugin.task.KotlinSnapshotTask
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.artifacts.DependencyResolutionListener
@@ -14,6 +15,15 @@ class KotlinSnapshotPlugin : Plugin<Project> {
     }
 
     private fun addTasks(project: Project) {
+        val updateSnapshotsTask = project.tasks.create(
+            KotlinSnapshotTask.UpdateSnapshots.name,
+            KotlinSnapshotTask.UpdateSnapshots::class.java)
+        val purgeSnapshotsTask = project.tasks.create(
+            KotlinSnapshotTask.PurgeSnapshots.name,
+            KotlinSnapshotTask.PurgeSnapshots::class.java)
+
+        updateSnapshotsTask.dependsOn("test")
+        purgeSnapshotsTask.dependsOn("test")
     }
 
     private fun addKotlinSnapshotDependency(project: Project) {
