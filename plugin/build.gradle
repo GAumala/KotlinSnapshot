@@ -1,5 +1,5 @@
 group 'com.karumi'
-version '0.0.1-SNAPSHOT'
+version '0.0.1'
 
 buildscript {
     ext.kotlin_version = '1.2.61'

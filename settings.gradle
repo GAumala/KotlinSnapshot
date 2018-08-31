@@ -1,2 +1,2 @@
-include ':core', ':gradle-plugin'
+include ':core', ':kotlin-snapshot'
 

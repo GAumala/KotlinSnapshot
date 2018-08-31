@@ -10,8 +10,8 @@ class KotlinSnapshotPlugin : Plugin<Project> {
     override fun apply(target: Project?) {
         target ?: return
 
-        addTasks(target)
         addKotlinSnapshotDependency(target)
+        target.afterEvaluate { addTasks(target) }
     }
 
     private fun addTasks(project: Project) {
