@@ -7,6 +7,6 @@ class AnyTest {
 
     @Test
     fun anyTest() {
-        12.matchWithSnapshot()
+        14.matchWithSnapshot()
     }
 }
