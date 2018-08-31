@@ -11,7 +11,7 @@ Snapshot testing is an assertion strategy based on the comparision of the instan
 Add the dependency to your ```build.gradle``` file: 
 
 ``` gradle
-  testImplementation 'com.karumi:kotlinsnapshot:0.0.1'
+  testImplementation 'com.karumi:kotlinsnapshot:0.1.0'
 ```
 
 Invoke the extension function named ``matchWithSnapshot`` from any instance. The name of the snapshot is not mandatory, if you don't specify it as the first ``matchWithSnapshot`` param the library will try to infer it from the test execution context. Example:
