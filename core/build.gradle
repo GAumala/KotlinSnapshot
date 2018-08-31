@@ -1,5 +1,5 @@
 group 'com.karumi.kotlinsnapshot'
-version '0.0.1'
+version '0.0.2-SNAPSHOT'
 
 buildscript {
     ext.kotlin_version = '1.2.10'
@@ -35,6 +35,16 @@ dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }
 
+apply plugin: 'maven'
+apply plugin: 'signing'
+
+install {
+    repositories {
+        mavenDeployer {
+            repository(url: uri('../repo'))
+        }
+    }
+}
 
 compileKotlin {
     kotlinOptions.jvmTarget = "1.8"

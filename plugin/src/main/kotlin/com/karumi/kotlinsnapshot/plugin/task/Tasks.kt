@@ -9,7 +9,7 @@ sealed class KotlinSnapshotTask : DefaultTask() {
         group = "KotlinSnapshot"
     }
 
-    class UpdateSnapshots : KotlinSnapshotTask() {
+    open class UpdateSnapshots : KotlinSnapshotTask() {
         companion object {
             const val name = "updateSnapshots"
         }
@@ -24,7 +24,7 @@ sealed class KotlinSnapshotTask : DefaultTask() {
         }
     }
 
-    class PurgeSnapshots : KotlinSnapshotTask() {
+    open class PurgeSnapshots : KotlinSnapshotTask() {
         companion object {
             const val name = "purgeSnapshots"
         }

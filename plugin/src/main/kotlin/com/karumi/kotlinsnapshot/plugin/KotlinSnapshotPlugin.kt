@@ -6,7 +6,7 @@ import org.gradle.api.Project
 import org.gradle.api.artifacts.DependencyResolutionListener
 import org.gradle.api.artifacts.ResolvableDependencies
 
-class KotlinSnapshotPlugin : Plugin<Project> {
+open class KotlinSnapshotPlugin : Plugin<Project> {
     override fun apply(target: Project?) {
         target ?: return
 
@@ -30,7 +30,7 @@ class KotlinSnapshotPlugin : Plugin<Project> {
         project.gradle.addListener(object : DependencyResolutionListener {
             override fun beforeResolve(dependencies: ResolvableDependencies?) {
                 val dependency = project.dependencies
-                    .create("com.karumi:kotlinsnapshot:${project.version}")
+                    .create("com.karumi.kotlinsnapshot:core:0.0.2-SNAPSHOT")
                 project.dependencies.add("testImplementation", dependency)
                 project.gradle.removeListener(this)
             }
