@@ -12,11 +12,8 @@ buildscript {
     }
 }
 
-
 apply plugin: 'kotlin'
 apply plugin: 'groovy'
-
-
 
 repositories {
     mavenCentral()

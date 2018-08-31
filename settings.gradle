@@ -1,2 +1,2 @@
-include ':core', ':kotlin-snapshot'
+include ':core', ':plugin'
 
