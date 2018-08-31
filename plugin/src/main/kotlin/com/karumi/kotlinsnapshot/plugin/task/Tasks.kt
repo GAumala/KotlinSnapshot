@@ -1,5 +1,6 @@
 package com.karumi.kotlinsnapshot.plugin.task
 
+import com.karumi.kotlinsnapshot.plugin.GroovyHack
 import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.TaskAction
 
@@ -20,7 +21,7 @@ sealed class KotlinSnapshotTask : DefaultTask() {
 
         @TaskAction
         fun updateSnapshots() {
-            System.setProperty("updateSnapshots", "1")
+            GroovyHack.configureProjectForSnapshotUpdate(project)
         }
     }
 
@@ -35,7 +36,7 @@ sealed class KotlinSnapshotTask : DefaultTask() {
 
         @TaskAction
         fun purgeSnapshots() {
-            System.setProperty("purgeSnapshots", "1")
+            GroovyHack.configureProjectForSnapshotPurge(project)
         }
     }
 }

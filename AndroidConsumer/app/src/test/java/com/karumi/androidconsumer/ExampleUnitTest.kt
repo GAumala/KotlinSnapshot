@@ -6,8 +6,9 @@ import org.junit.Test
 class ExampleUnitTest {
     @Test
     fun addition_isWrong() {
-        val asd = 5
+        val asd = 11
 
+        print(System.getProperties())
         asd.matchWithSnapshot()
     }
 }

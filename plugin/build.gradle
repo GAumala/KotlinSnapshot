@@ -14,6 +14,9 @@ buildscript {
 
 
 apply plugin: 'kotlin'
+apply plugin: 'groovy'
+
+
 
 repositories {
     mavenCentral()
@@ -21,11 +24,17 @@ repositories {
 
 dependencies {
     compile gradleApi()
+    compile localGroovy()
     compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
 }
 
+compileGroovy.dependsOn = compileGroovy.taskDependencies.values - 'compileJava'
+compileKotlin.dependsOn compileGroovy
+compileKotlin.classpath += files(compileGroovy.destinationDir)
+classes.dependsOn compileKotlin
 compileKotlin {
     kotlinOptions.jvmTarget = "1.8"
+    classpath = classpath.plus(files(compileGroovy.destinationDir))
 }
 compileTestKotlin {
     kotlinOptions.jvmTarget = "1.8"
@@ -121,5 +130,14 @@ uploadArchives {
 sourceSets {
     test {
         output.resourcesDir = "build/classes/test/resources"
+        groovy {
+            srcDirs = ['test/groovy']
+        }
+    }
+    main {
+        groovy {
+            srcDirs = ['src/main/groovy']
+        }
     }
 }
+
