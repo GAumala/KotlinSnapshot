@@ -22,7 +22,7 @@ android:
 script:
   - ./gradlew ktlint test install
   - ./gradlew install
-  - cd ../plugin
+  - cd plugin
   - ./gradlew install
   - cd ../KotlinConsumer
   - ./gradlew test
