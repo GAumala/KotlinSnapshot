@@ -6,7 +6,7 @@ buildscript {
     }
     dependencies {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        classpath "com.karumi:kotlin-snapshot:0.2.0-SNAPSHOT"
+        classpath "com.karumi:kotlin-snapshot:0.2.0"
     }
 }
 
@@ -15,7 +15,7 @@ plugins {
 }
 
 group 'com.karumi.kotlinsnapshot'
-version '0.2.0-SNAPSHOT'
+version '0.2.0'
 
 apply plugin: 'com.karumi.kotlin-snapshot'
 

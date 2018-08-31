@@ -1,8 +1,8 @@
-group 'com.karumi'
-version '0.2.0-SNAPSHOT'
+group 'com.karumi.kotlinsnapshot'
+version '0.2.0'
 
 buildscript {
-    ext.kotlin_version = '1.2.61'
+    ext.kotlin_version = '1.2.10'
 
     repositories {
         mavenCentral()
