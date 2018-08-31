@@ -5,7 +5,7 @@ buildscript {
     maven { url uri('../../repo') }
   }
   dependencies {
-    classpath 'com.karumi:kotlin-snapshot:0.0.1'
+    classpath 'com.karumi:kotlin-snapshot:0.2.0-SNAPSHOT'
   }
 }
 
