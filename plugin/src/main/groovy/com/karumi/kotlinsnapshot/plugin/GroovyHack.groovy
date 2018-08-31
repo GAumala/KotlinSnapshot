@@ -11,8 +11,11 @@ class GroovyHack {
                 systemProperty "updateSnapshots", "1"
             }
         }
+
         project.test {
-            systemProperty "updateSnapshots", "1"
+            if (properties["systemProperty"] != null) {
+                systemProperty "updateSnapshots", "1"
+            }
         }
     }
 
@@ -24,7 +27,9 @@ class GroovyHack {
             }
         }
         project.test {
-            systemProperty "purgeSnapshots", "1"
+            if (properties["systemProperty"] != null) {
+                systemProperty "purgeSnapshots", "1"
+            }
         }
     }
 }
