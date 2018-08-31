@@ -1,0 +1,37 @@
+buildscript {
+    ext.kotlin_version = '1.2.61'
+    repositories {
+        mavenCentral()
+        maven { url uri("../repo") }
+    }
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath "com.karumi:kotlin-snapshot:0.2.0-SNAPSHOT"
+    }
+}
+
+plugins {
+    id 'org.jetbrains.kotlin.jvm' version '1.2.60'
+}
+
+group 'com.karumi.kotlinsnapshot'
+version '0.2.0-SNAPSHOT'
+
+apply plugin: 'com.karumi.kotlin-snapshot'
+
+repositories {
+    mavenCentral()
+    maven { url uri("../repo") }
+}
+
+dependencies {
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
+    testCompile "junit:junit:4.11"
+}
+
+compileKotlin {
+    kotlinOptions.jvmTarget = "1.8"
+}
+compileTestKotlin {
+    kotlinOptions.jvmTarget = "1.8"
+}
