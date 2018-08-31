@@ -20,12 +20,11 @@ android:
     - sys-img-armeabi-v7a-android-22
 
 script:
-  - ./gradlew ktlint test
-  - cd core
+  - ./gradlew ktlint test install
   - ./gradlew install
   - cd ../plugin
   - ./gradlew install
-  - cd KotlinConsumer
+  - cd ../KotlinConsumer
   - ./gradlew test
   - cd ../AndroidConsumer
   - ./gradlew test
