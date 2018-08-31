@@ -14,7 +14,7 @@ Add the dependency to your ```build.gradle``` file:
   testImplementation 'com.karumi:kotlinsnapshot:0.1.0'
 ```
 
-Invoke the extension function named ``matchWithSnapshot`` from any instance. The name of the snapshot is not mandatory, if you don't specify it as the first ``matchWithSnapshot`` param the library will try to infer it from the test execution context. Example:
+Invoke the extension function named ``matchWithSnapshot`` from any instance. The name of the snapshot is not mandatory, if you don't specify it as the first ``matchWithSnapshot`` param the library will infer it from the test execution context. Example:
 
 ``` kotlin
 class NetworkTest {
@@ -35,20 +35,20 @@ class NetworkTest {
 
 ```
 
-If you need to customize the snapshots folder path you can create an instance of `KotlinSnapshot` in your test file and use the method `matchWithSnapshot`, which takes 2 arguments: A string with the name of the snapshot and a `Any` object to be shot using its `toString()` implementation.
+If you need to customize the snapshots folder path you can create an instance of `KotlinSnapshot` in your test file and use the method `matchWithSnapshot`, which takes 2 arguments: A string with the name of the snapshot and an `Any` object to be saved using its `toString()` implementation.
 
 ``` kotlin
     val kotlinSnapshot = KotlinSnapshot(relativePath = "src/test/kotlin/com/my/package")
 ``` 
 
-After you run the test for the first time, a new  snapshot will be written in the `__snapshot__` directory of the root of your project. The written snapshot for this example would look like this:
+After you run the test for the first time, a new snapshot will be written in the `__snapshot__` directory of the root of your project. The written snapshot for this example would look like this:
 
 ```bash
 $ cat __snapshot__/should\ fetch\ data\ from\ network.snap 
 {"name":"gabriel","id":5}
 ```
 
-On subsequent runs, the value will be compared with the snapshot stored in the filesystem if the are not equal, your test will fail. To see the detailed error you may need to run your tests with `./gradlew test --info`. You should see something like this:
+On subsequent runs, the value will be compared with the snapshot stored in the filesystem if they are not equal, your test will fail. To see the detailed error you may need to run your tests with `./gradlew test --info`. You should see something like this:
 
 ![Snapshot Error](./art/errorScreenshot.png)
 
@@ -75,12 +75,12 @@ On Android projects you might need to do this instead:
     }
 ```
 
-Then, when you want to update the snapshot for a specific test: 
+Then, when you want to update the snapshot for a specific test run: 
 ``` bash
 ./gradlew test -Du=1 --info --tests *MyTest.someTestINeedToUpdate
 ```
 
-Please note that in this example I used "u" but, it can be any flag, depending on how you configure your gradle file.
+Please note that in this example I used "u" but, it can be any other flag you like, depending on how you configure your gradle file.
 
 On android projects the `test` task might not support the `--tests` flag to filter tests, you might need to run something like `testDebug` instead. It is not necessary to filter tests when updating, but you should do it to avoid inconsistencies.
 
@@ -96,7 +96,7 @@ test {
 }
 ```
 
-Again android projects may need to handle this differently:
+Again, android projects may need to handle this differently:
 
 ```build.gradle
     testOptions {
@@ -112,7 +112,9 @@ Then, when you want to delete the snapshots:
 ./gradlew test -Dp=1 --info
 ```
 
-## Linting and formatting
+## Contributing
+
+### Linting and formatting
 
 This repository uses [ktlint](https://github.com/shyiko/ktlint). This Gradle plugin ensures the code style is homogeneous and always correct thanks to the evaluation of the code during the build execution. You can use these commands in order to check if the code changes passes the repository codestyle and to format the code automatically:
 
@@ -121,7 +123,7 @@ This repository uses [ktlint](https://github.com/shyiko/ktlint). This Gradle plu
 ./gradlew ktlintFormat //Formats the code for you
 ```
 
-## Executing tests
+### Running tests
 
 This project contains some tests written using JUnit. You can easily run the tests by executing the following commands:
 
@@ -131,7 +133,7 @@ This project contains some tests written using JUnit. You can easily run the tes
 ./gradlew test --tests "com.xyz.b.module.TestClass.testToRun" //Run a single test
 ```
 
-## Contributing
+### Sending your PR
 
 If you would like to contribute code to this repository you can do so through GitHub by creating a new branch in the repository and sending a pull request or opening an issue. Please, remember that there are some requirements you have to pass before accepting your contribution:
 
