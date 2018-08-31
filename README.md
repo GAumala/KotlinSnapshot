@@ -50,7 +50,7 @@ $ cat __snapshot__/should\ fetch\ data\ from\ network.snap
 
 On subsequent runs, the value will be compared with the snapshot stored in the filesystem if the are not equal, your test will fail. To see the detailed error you may need to run your tests with `./gradlew test --info`. You should see something like this:
 
-![Snapshot Error](https://user-images.githubusercontent.com/5729175/37878769-98ef26ae-3033-11e8-8066-ea1e49630de3.png)
+![Snapshot Error](./art/errorScreenshot.png)
 
 ## Updating Snapshots
 
