@@ -1,3 +1,6 @@
+group 'com.karumi'
+version '0.0.1-SNAPSHOT'
+
 buildscript {
     ext.kotlin_version = '1.2.61'
 
@@ -9,8 +12,6 @@ buildscript {
     }
 }
 
-group 'com.karumi'
-version '0.0.1-SNAPSHOT'
 
 apply plugin: 'kotlin'
 
