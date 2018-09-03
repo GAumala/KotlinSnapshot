@@ -1,4 +1,28 @@
-language: java
+language: android
+sudo: required
+env:
+  global:
+    - ADB_INSTALL_TIMEOUT=8 # 8 minutes (2 minutes by default)
+
+jdk:
+  - oraclejdk8
+
+android:
+  components:
+    - tools
+    - platform-tools
+    - build-tools-28.0.0-rc02
+    - build-tools-27.0.3
+    - android-27
+    - android-28
+    - extra-android-support
+    - extra-google-m2repository
+    - extra-android-m2repository
 
 script:
-- ./gradlew clean ktlint test
+  - ./gradlew ktlint test install
+  - ./gradlew install
+  - cd KotlinConsumer
+  - ./gradlew test
+  - cd ../AndroidConsumer
+  - ./gradlew test
