@@ -7,12 +7,12 @@ class KotlinSnapshot(snapshotsFolder: String = "") {
     private val camera = Camera(snapshotsFolder)
 
     fun matchWithSnapshot(value: Any, snapshotName: String? = null) {
-        camera.matchWithSnapshot(snapshotName, value)
+        camera.matchWithSnapshot(value, snapshotName)
     }
 }
 
 private val camera = Camera()
 
 fun Any.matchWithSnapshot(snapshotName: String? = null) {
-    camera.matchWithSnapshot(snapshotName, this)
+    camera.matchWithSnapshot(this, snapshotName)
 }

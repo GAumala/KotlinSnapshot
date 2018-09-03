@@ -14,11 +14,7 @@ class Camera(relativePath: String = "") {
         purgeSnapshotsIfNeeded(snapshotDir)
     }
 
-    fun matchWithSnapshot(value: Any) {
-        matchWithSnapshot(null, value)
-    }
-
-    fun matchWithSnapshot(snapshotName: String? = null, value: Any) {
+    fun matchWithSnapshot(value: Any, snapshotName: String? = null) {
         val snapshotFileName = if (snapshotName != null)
             "$snapshotName.snap"
         else
