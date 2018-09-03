@@ -157,7 +157,7 @@ class KotlinSerializationTest {
         )
         snap.matchWithSnapshot(developerByTeamMap)
         snap.matchWithSnapshot(developerByTeamLinked)
-        snap.matchWithSnapshot(developerByTeamLinked)
+        snap.matchWithSnapshot(developerByTeamSorted)
     }
 
     @Test
