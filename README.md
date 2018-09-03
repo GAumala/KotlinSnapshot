@@ -16,7 +16,7 @@ Add our Gradle Plugin to your ```build.gradle``` file:
     mavenCentral()
   }
   dependencies {
-    classpath 'com.karumi.kotlinsnapshot:plugin:0.2.0'
+    classpath 'com.karumi.kotlinsnapshot:plugin:0.3.0'
   }
 }
 
