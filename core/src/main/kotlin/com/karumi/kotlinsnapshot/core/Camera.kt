@@ -80,8 +80,7 @@ class Camera(relativePath: String = "") {
         val stackTrace = Thread.currentThread().stackTrace
         val testCaseTrace = stackTrace.toList().firstOrNull { trace ->
             val completeClassName = trace.className.toLowerCase()
-            val packageName = completeClassName
-                .substring(0, completeClassName.lastIndexOf("."))
+            val packageName = completeClassName.substringBeforeLast(".", "")
             val isAJUnitClass = packageName
                 .contains("junit")
             val isAGradleClass = packageName.contains("org.gradle.api.internal.tasks.testing")
