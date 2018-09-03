@@ -12,12 +12,11 @@ android:
     - tools
     - platform-tools
     - build-tools-28.0.0-rc02
-    - android-22
+    - android-27
     - android-28
     - extra-android-support
     - extra-google-m2repository
     - extra-android-m2repository
-    - sys-img-armeabi-v7a-android-22
 
 script:
   - ./gradlew ktlint test install
