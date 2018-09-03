@@ -10,11 +10,9 @@ class GroovyHack {
             androidExtension.testOptions.unitTests.all {
                 systemProperty "updateSnapshots", "1"
             }
-        }
-
-        project.test {
-            if (["systemProperty"] != null) {
-                systemProperty "updateSnapshots", "1"
+        } else {
+            project.test {
+                System.setProperty "updateSnapshots", "1"
             }
         }
     }
@@ -25,10 +23,9 @@ class GroovyHack {
             androidExtension.testOptions.unitTests.all {
                 systemProperty "purgeSnapshots", "1"
             }
-        }
-        project.test {
-            if (["systemProperty"] != null) {
-                systemProperty "purgeSnapshots", "1"
+        } else {
+            project.test {
+                System.setProperty "purgeSnapshots", "1"
             }
         }
     }
