@@ -181,6 +181,14 @@ class KotlinSerializationTest {
     }
 
     @Test
+    fun `should serialize Date object with time and timezone`() {
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd:HH:mm:ss.SSS", Locale.US)
+        dateFormat.timeZone = TimeZone.getTimeZone("GMT")
+        val date = dateFormat.parse("2007-12-03:18:46:19.333")
+        date.matchWithSnapshot()
+    }
+
+    @Test
     fun `should serialize LocalDate object`() {
         val localDate = LocalDate.parse("2007-12-03")
         localDate.matchWithSnapshot()
