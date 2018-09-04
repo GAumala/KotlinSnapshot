@@ -1,5 +1,8 @@
 package com.karumi.kotlinsnapshot.core
 
+import java.time.ZoneId
+import java.time.temporal.Temporal
+import java.util.Date
 import kotlin.reflect.KProperty1
 import kotlin.reflect.KVisibility
 import kotlin.reflect.full.memberProperties
@@ -20,8 +23,16 @@ class KotlinSerialization : SerializationModule<Any> {
         value is Array<*> -> iterableToString(value.toList())
         value is Map<*, *> -> mapToString(value)
         value is Pair<*, *> -> pairToString(value)
+        value is Date -> dateToString(value)
+        value is Temporal -> value.toString()
         else -> toString(value)
     }
+
+    private fun dateToString(value: Date): String =
+        value.toInstant()
+            .atZone(ZoneId.of("Z"))
+            .toLocalDateTime()
+            .toString()
 
     private fun isPrimitive(value: Any) =
         value::class.javaPrimitiveType?.isPrimitive ?: false

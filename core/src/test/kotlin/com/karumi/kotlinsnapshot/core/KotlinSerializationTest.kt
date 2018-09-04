@@ -1,7 +1,13 @@
 package com.karumi.kotlinsnapshot.core
 
 import com.karumi.kotlinsnapshot.KotlinSnapshot
+import com.karumi.kotlinsnapshot.matchWithSnapshot
 import org.junit.Test
+import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.util.Locale
+import java.util.TimeZone
 
 class KotlinSerializationTest {
 
@@ -164,6 +170,26 @@ class KotlinSerializationTest {
     fun `should serialize a null object when is a member field`() {
         val user = UserWithOptionalName(1, null)
         snap.matchWithSnapshot(user)
+    }
+
+    @Test
+    fun `should serialize Date`() {
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.US)
+        dateFormat.timeZone = TimeZone.getTimeZone("UTC")
+        val date = dateFormat.parse("2007-12-03")
+        date.matchWithSnapshot()
+    }
+
+    @Test
+    fun `should serialize LocalDate object`() {
+        val localDate = LocalDate.parse("2007-12-03")
+        localDate.matchWithSnapshot()
+    }
+
+    @Test
+    fun `should serialize LocalDateTime object`() {
+        val dateTime = LocalDateTime.parse("2007-12-03T10:15:30")
+        dateTime.matchWithSnapshot()
     }
 
     enum class Primitives { INT, DOUBLE, LONG }
