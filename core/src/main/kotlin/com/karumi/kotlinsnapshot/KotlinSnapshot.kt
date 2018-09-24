@@ -7,11 +7,16 @@ import com.karumi.kotlinsnapshot.core.TestCaseExtractor
 
 class KotlinSnapshot<in A>(
     serializationModule: SerializationModule<A>,
+    testClassAsDirectory: Boolean = false,
     snapshotsFolder: String = ""
 ) {
     companion object {
-        operator fun invoke(snapshotsFolder: String = ""): KotlinSnapshot<Any> = KotlinSnapshot(
+        operator fun invoke(
+            snapshotsFolder: String = "",
+            testClassAsDirectory: Boolean = false
+        ): KotlinSnapshot<Any> = KotlinSnapshot(
             KotlinSerialization(),
+            testClassAsDirectory,
             snapshotsFolder
         )
     }
@@ -19,6 +24,7 @@ class KotlinSnapshot<in A>(
     private val camera = Camera(
         serializationModule,
         TestCaseExtractor(),
+        testClassAsDirectory,
         snapshotsFolder
     )
 

@@ -26,6 +26,8 @@ apply plugin: 'com.karumi.kotlin-snapshot'
 Invoke the extension function named ``matchWithSnapshot`` from any instance. The name of the snapshot is not mandatory, if you don't specify it as the first ``matchWithSnapshot`` param the library will infer it from the test execution context. Example:
 
 ``` kotlin
+package com.mypackage
+
 class NetworkTest {
 
     private val networkClient = MyNetworkClient()
@@ -56,6 +58,19 @@ After you run the test for the first time, a new snapshot will be written in the
 $ cat __snapshot__/should\ fetch\ data\ from\ network.snap 
 {"name":"gabriel","id":5}
 ```
+
+You can also configure `KotlinSnapshot` to group every snapshot file into a directory named using the test class name:
+
+``` kotlin
+val kotlinSnapshot = KotlinSnapshot(relativePath = "src/test/kotlin/com/my/package", testClassAsDirectory = true)
+``` 
+
+The snapshot will be generated inside a directory with the name of the test instead of putting it in `__snapshot__` folder. In the previous example, the test will be created inside `com.mypackage.NetworkTest`:
+
+```bash
+$ cat __snapshot__/my.package.NetworkTest/should\ fetch\ data\ from\ network.snap 
+{"name":"gabriel","id":5}
+``` 
 
 On subsequent runs, the value will be compared with the snapshot stored in the filesystem if they are not equal, your test will fail. To see the detailed error you may need to run your tests with `./gradlew test --info`. You should see something like this:
 

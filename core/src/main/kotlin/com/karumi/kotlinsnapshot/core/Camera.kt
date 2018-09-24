@@ -8,7 +8,8 @@ import java.nio.file.Paths
 internal class Camera<in A>(
     private val serializationModule: SerializationModule<A>,
     private val extractor: TestCaseExtractor,
-    relativePath: String = ""
+    private val testClassAsDirectory: Boolean = false,
+    private val relativePath: String = ""
 ) {
     private val snapshotDir: File
     private val dmp = DiffMatchPatch()
@@ -19,16 +20,31 @@ internal class Camera<in A>(
     }
 
     fun matchWithSnapshot(value: A, snapshotName: String? = null) {
-        val snapshotFileName = if (snapshotName != null)
-            "$snapshotName.snap"
+        val snapshotTestCaseName = if (snapshotName != null)
+            TestCaseName(null, snapshotName)
         else
-            "${extractTestCaseName()}.snap"
-        val snapshotFile = File(snapshotDir, snapshotFileName)
+            extractTestCaseName()
+        val snapshotFile = getFile(snapshotTestCaseName)
         if (snapshotFile.exists())
             matchValueWithExistingSnapshot(snapshotFile, value)
         else
             writeSnapshot(false, snapshotFile, value)
     }
+
+    private fun getFile(testCaseName: TestCaseName): File =
+        if (testClassAsDirectory) {
+            val testClassName = testCaseName.className
+                ?: extractor.getTestStackElement()?.className ?: ""
+            Paths.get(
+                snapshotDir.absolutePath,
+                testClassName,
+                "${testCaseName.methodName}.snap"
+            ).toFile().also {
+                it.parentFile.mkdirs()
+            }
+        } else {
+            File(snapshotDir, "$testCaseName.snap")
+        }
 
     private val shouldUpdateSnapshots: Boolean by lazy {
         System.getProperty("updateSnapshots") == "1"
@@ -81,15 +97,23 @@ internal class Camera<in A>(
         }
     }
 
-    private fun extractTestCaseName(): String {
+    private fun extractTestCaseName(): TestCaseName {
         val testCaseTrace = extractor.getTestStackElement()
         if (testCaseTrace != null) {
-            return "${testCaseTrace.className}_${testCaseTrace.methodName}"
+            return TestCaseName(testCaseTrace.className, testCaseTrace.methodName)
         } else {
             throw TestNameNotFoundException("Kotlin Snapshot library couldn't find the name " +
                 "of the test. Review if the test case file or the spec file contains the word " +
                 "test or spec or specify a snapshot name manually, this is a requirement needed " +
                 "to use Kotlin Snapshot")
+        }
+    }
+
+    private data class TestCaseName(val className: String?, val methodName: String) {
+        override fun toString(): String = if (className != null) {
+            "${className}_$methodName"
+        } else {
+            methodName
         }
     }
 }
