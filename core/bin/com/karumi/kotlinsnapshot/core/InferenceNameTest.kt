@@ -30,7 +30,9 @@ class InferenceNameSpec {
     }
 }
 
-class InvalidClassName {
+class InferenceNameNotSupported {
+
+    val camera = Camera
 
     @Test(expected = TestNameNotFoundException::class)
     fun if_the_test_name_can_not_be_found_and_exception_will_be_thrown() {

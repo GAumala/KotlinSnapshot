@@ -5,8 +5,9 @@ import org.bitbucket.cowwoc.diffmatchpatch.DiffMatchPatch
 import java.io.File
 import java.nio.file.Paths
 
-class Camera<in A>(
+internal class Camera<in A>(
     private val serializationModule: SerializationModule<A>,
+    private val extractor: TestCaseExtractor,
     relativePath: String = ""
 ) {
     private val snapshotDir: File
@@ -81,17 +82,7 @@ class Camera<in A>(
     }
 
     private fun extractTestCaseName(): String {
-        val stackTrace = Thread.currentThread().stackTrace
-        val testCaseTrace = stackTrace.toList().firstOrNull { trace ->
-            val completeClassName = trace.className.toLowerCase()
-            val packageName = completeClassName.substringBeforeLast(".", "")
-            val isAJUnitClass = packageName
-                .contains("junit")
-            val isAGradleClass = packageName.contains("org.gradle.api.internal.tasks.testing")
-            val isATestClass = completeClassName.contains("test")
-            val isASpecClass = completeClassName.contains("spec")
-            (isATestClass || isASpecClass) && !isAJUnitClass && !isAGradleClass
-        }
+        val testCaseTrace = extractor.getTestStackElement()
         if (testCaseTrace != null) {
             return "${testCaseTrace.className}_${testCaseTrace.methodName}"
         } else {
