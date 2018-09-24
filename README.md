@@ -16,7 +16,7 @@ buildscript {
     mavenCentral()
   }
   dependencies {
-    classpath 'com.karumi.kotlinsnapshot:plugin:0.3.0'
+    classpath 'com.karumi.kotlinsnapshot:plugin:1.0.0'
   }
 }
 
