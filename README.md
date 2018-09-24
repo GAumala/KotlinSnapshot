@@ -11,7 +11,7 @@ Snapshot testing is an assertion strategy based on the comparision of the instan
 Add our Gradle Plugin to your ```build.gradle``` file: 
 
 ``` gradle
-  buildscript {
+buildscript {
   repositories {
     mavenCentral()
   }
@@ -26,6 +26,8 @@ apply plugin: 'com.karumi.kotlin-snapshot'
 Invoke the extension function named ``matchWithSnapshot`` from any instance. The name of the snapshot is not mandatory, if you don't specify it as the first ``matchWithSnapshot`` param the library will infer it from the test execution context. Example:
 
 ``` kotlin
+package com.mypackage
+
 class NetworkTest {
 
     private val networkClient = MyNetworkClient()
@@ -47,7 +49,7 @@ class NetworkTest {
 If you need to customize the snapshots folder path you can create an instance of `KotlinSnapshot` in your test file and use the method `matchWithSnapshot`, which takes 2 arguments: A string with the name of the snapshot and an `Any` object to be saved using its `toString()` implementation.
 
 ``` kotlin
-    val kotlinSnapshot = KotlinSnapshot(relativePath = "src/test/kotlin/com/my/package")
+val kotlinSnapshot = KotlinSnapshot(relativePath = "src/test/kotlin/com/my/package")
 ``` 
 
 After you run the test for the first time, a new snapshot will be written in the `__snapshot__` directory of the root of your project. The written snapshot for this example would look like this:
@@ -56,6 +58,19 @@ After you run the test for the first time, a new snapshot will be written in the
 $ cat __snapshot__/should\ fetch\ data\ from\ network.snap 
 {"name":"gabriel","id":5}
 ```
+
+You can also configure `KotlinSnapshot` to group every snapshot file into a directory named using the test class name:
+
+``` kotlin
+val kotlinSnapshot = KotlinSnapshot(relativePath = "src/test/kotlin/com/my/package", testClassAsDirectory = true)
+``` 
+
+The snapshot will be generated inside a directory with the name of the test instead of putting it in `__snapshot__` folder. In the previous example, the test will be created inside `com.mypackage.NetworkTest`:
+
+```bash
+$ cat __snapshot__/my.package.NetworkTest/should\ fetch\ data\ from\ network.snap 
+{"name":"gabriel","id":5}
+``` 
 
 On subsequent runs, the value will be compared with the snapshot stored in the filesystem if they are not equal, your test will fail. To see the detailed error you may need to run your tests with `./gradlew test --info`. You should see something like this:
 
