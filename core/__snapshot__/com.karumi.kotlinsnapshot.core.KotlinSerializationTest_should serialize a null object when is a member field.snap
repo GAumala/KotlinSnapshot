@@ -1,1 +1,4 @@
-UserWithOptionalName(id=1, name=null)
+{
+  "__class__": "UserWithOptionalName",
+  "id": 1
+}

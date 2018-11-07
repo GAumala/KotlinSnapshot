@@ -1,0 +1,22 @@
+{
+  "__class__": "TreeMap",
+  "mobile": {
+    "__class__": "Developer",
+    "name": "miguel",
+    "githubStars": 3
+  },
+  "product": [
+    {
+      "__class__": "User",
+      "id": 1,
+      "name": "gabriel"
+    }
+  ],
+  "sales": [
+    {
+      "__class__": "User",
+      "id": 1,
+      "name": "ramon"
+    }
+  ]
+}

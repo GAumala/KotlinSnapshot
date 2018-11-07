@@ -1,0 +1,21 @@
+[
+  {
+    "__class__": "User",
+    "id": 1,
+    "name": "davide"
+  },
+  [
+    [
+      {
+        "__class__": "Developer",
+        "name": "gabriel",
+        "githubStars": 3
+      },
+      {
+        "__class__": "Developer",
+        "name": "fran",
+        "githubStars": 1
+      }
+    ]
+  ]
+]

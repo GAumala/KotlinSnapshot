@@ -1,1 +1,19 @@
-[[User(id=1, name=gabriel), User(id=2, name=andres), User(id=3, name=miguel)]]
+[
+  [
+    {
+      "__class__": "User",
+      "id": 1,
+      "name": "gabriel"
+    },
+    {
+      "__class__": "User",
+      "id": 2,
+      "name": "andres"
+    },
+    {
+      "__class__": "User",
+      "id": 3,
+      "name": "miguel"
+    }
+  ]
+]

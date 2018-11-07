@@ -1,1 +1,7 @@
-Request(isSuccess=false, networkError=NotFound)
+{
+  "__class__": "Request",
+  "isSuccess": false,
+  "networkError": {
+    "__class__": "NotFound"
+  }
+}

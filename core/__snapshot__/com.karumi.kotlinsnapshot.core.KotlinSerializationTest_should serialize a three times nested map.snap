@@ -1,0 +1,35 @@
+{
+  "__class__": "SingletonMap",
+  "level 2 map ": {
+    "__class__": "SingletonMap",
+    "level 1 map ": {
+      "__class__": "LinkedHashMap",
+      "user class": {
+        "__class__": "User",
+        "id": 2,
+        "name": "fran"
+      },
+      "address class without user": {
+        "__class__": "Address",
+        "postalCode": {
+          "__class__": "PostCode",
+          "value": 2
+        },
+        "streetName": "Elm Street"
+      },
+      "address class with user": {
+        "__class__": "Address",
+        "postalCode": {
+          "__class__": "PostCode",
+          "value": 2
+        },
+        "streetName": "Elm Street",
+        "user": {
+          "__class__": "User",
+          "id": 9,
+          "name": "Sherlok"
+        }
+      }
+    }
+  }
+}
