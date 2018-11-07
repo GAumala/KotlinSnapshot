@@ -16,7 +16,7 @@ buildscript {
     mavenCentral()
   }
   dependencies {
-    classpath 'com.karumi.kotlinsnapshot:plugin:1.0.0'
+    classpath 'com.karumi.kotlinsnapshot:plugin:2.0.0'
   }
 }
 
@@ -144,9 +144,9 @@ class CustomKotlinJsonSerialization: SerializationModule {
 
 ### Changelog
 
-#### 3.0.0 Improve the serialization format:
+#### 2.0.0 Improve the serialization format:
 
-* We've replaced the old serialization format with a custom JSON format letting the user review the snapshots easily and unify the format. **If you update the library to a 3.X version or greater you'll have to record all your tests again.**
+* We've replaced the old serialization format with a custom JSON format letting the user review the snapshots easily and unify the format. **If you update the library to a 2.X version or greater you'll have to record all your tests again.**
 
 ### Sending your PR
 
