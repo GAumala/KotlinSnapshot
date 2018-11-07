@@ -1,1 +1,4 @@
-BadRequest(error=Body is required.)
+{
+  "__class__": "BadRequest",
+  "error": "Body is required."
+}

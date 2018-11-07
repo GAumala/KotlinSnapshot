@@ -1,1 +1,18 @@
-{1=User(id=1, name=gabriel), 2=User(id=2, name=andres), 3=User(id=3, name=miguel)}
+{
+  "__class__": "LinkedHashMap",
+  "1": {
+    "__class__": "User",
+    "id": 1,
+    "name": "gabriel"
+  },
+  "2": {
+    "__class__": "User",
+    "id": 2,
+    "name": "andres"
+  },
+  "3": {
+    "__class__": "User",
+    "id": 3,
+    "name": "miguel"
+  }
+}

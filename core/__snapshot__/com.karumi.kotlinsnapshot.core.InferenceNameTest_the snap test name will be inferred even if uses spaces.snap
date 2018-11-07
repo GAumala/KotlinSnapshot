@@ -1,1 +1,5 @@
-Developer(name=Toni, yearsInTheCompany=1)
+{
+  "__class__": "Developer",
+  "name": "Toni",
+  "yearsInTheCompany": 1
+}

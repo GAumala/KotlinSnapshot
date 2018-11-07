@@ -1,1 +1,9 @@
-(1, User(id=1, name=gabriel))
+{
+  "__class__": "Pair",
+  "first": 1,
+  "second": {
+    "__class__": "User",
+    "id": 1,
+    "name": "gabriel"
+  }
+}

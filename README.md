@@ -16,7 +16,7 @@ buildscript {
     mavenCentral()
   }
   dependencies {
-    classpath 'com.karumi.kotlinsnapshot:plugin:0.3.0'
+    classpath 'com.karumi.kotlinsnapshot:plugin:2.0.0'
   }
 }
 
@@ -46,7 +46,7 @@ class NetworkTest {
 
 ```
 
-If you need to customize the snapshots folder path you can create an instance of `KotlinSnapshot` in your test file and use the method `matchWithSnapshot`, which takes 2 arguments: A string with the name of the snapshot and an `Any` object to be saved using its `toString()` implementation.
+If you need to customize the snapshots folder path you can create an instance of `KotlinSnapshot` in your test file and use the method `matchWithSnapshot`, which takes 2 arguments: A string with the name of the snapshot and an `Any` object to be saved using its json serialized version using a customized version of GSON.
 
 ``` kotlin
 val kotlinSnapshot = KotlinSnapshot(relativePath = "src/test/kotlin/com/my/package")
@@ -112,6 +112,41 @@ This project contains some tests written using JUnit. You can easily run the tes
 ./gradlew test -t //Run every test using the watch mode.
 ./gradlew test --tests "com.xyz.b.module.TestClass.testToRun" //Run a single test
 ```
+
+## Customizing serializations
+
+KotlinSnapshot uses custom serialization for the basic types. If, for some reason, you want to implement your custom serializer you can create your own ``SerializationModule``. If you still want to reuse part of the serialization we provide you can compose your serializer as follows:
+
+```kotlin
+class CustomKotlinSerialization : SerializationModule {
+
+        private val kotlinSerialization = KotlinSerialization()
+
+        override fun serialize(value: Any?): String = when {
+            value is LocalDate -> "custom serialization configured"
+            else -> kotlinSerialization.serialize(value)
+        }
+}
+```
+
+Take into account that the ``KotlinSerialization`` class uses ``Gson`` under the hood. This class transforms your instances into json strings you can easily review when needed. On top of the json serialization we add some metadata really useful when serializing sealed hierarchies or objects. If for some reason you need to extend the serializer and use your own custom serializer also based on Gson you can do it as follows:
+
+```kotlin
+class CustomKotlinJsonSerialization: SerializationModule {
+
+        private val customGson = KotlinSerialization.gsonBuilder
+            .setDateFormat("yyyy-MM-dd")
+            .create()
+
+        override fun serialize(value: Any?): String = customGson.toJson(value)
+}
+```
+
+### Changelog
+
+#### 2.0.0 Improve the serialization format:
+
+* We've replaced the old serialization format with a custom JSON format letting the user review the snapshots easily and unify the format. **If you update the library to a 2.X version or greater you'll have to record all your tests again.**
 
 ### Sending your PR
 
