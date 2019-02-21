@@ -1,4 +1,4 @@
-[31mReceived value[0m does not match [32mstored snapshot: "com.karumi.kotlinsnapshot.core.CameraTest_should_throw_snapshot_exception_when_not_match.snap"[0m
+[31mReceived value[0m does not match [32mstored snapshot: "should throw snapshot exception when not match.snap"[0m
 
 [32m-Snapshot[0m
 [31m+Received[0m
