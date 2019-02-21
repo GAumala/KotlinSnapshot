@@ -1,6 +1,7 @@
 package com.karumi.kotlinsnapshot.core
 
 import com.karumi.kotlinsnapshot.exceptions.TestNameNotFoundException
+import junit.framework.ComparisonFailure
 import org.bitbucket.cowwoc.diffmatchpatch.DiffMatchPatch
 import java.io.File
 import java.nio.file.Paths
@@ -62,7 +63,7 @@ internal class Camera (
             writeSnapshot(true, snapshotFile, value)
         else if (hasChanged) {
             val msg = DiffPrinter.toReadableConsoleMessage(snapshotFile.name, diffs)
-            throw SnapshotException(diffs, msg)
+            throw SnapshotException(diffs, msg, snapshotContents, valueString)
         }
     }
 
