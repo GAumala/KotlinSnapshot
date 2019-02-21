@@ -1,12 +1,11 @@
 package com.karumi.kotlinsnapshot.core
 
 import com.karumi.kotlinsnapshot.exceptions.TestNameNotFoundException
-import junit.framework.ComparisonFailure
 import org.bitbucket.cowwoc.diffmatchpatch.DiffMatchPatch
 import java.io.File
 import java.nio.file.Paths
 
-internal class Camera (
+internal class Camera(
     private val serializationModule: SerializationModule,
     private val extractor: TestCaseExtractor,
     private val testClassAsDirectory: Boolean = false,

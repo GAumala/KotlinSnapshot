@@ -2,7 +2,6 @@ package com.karumi.kotlinsnapshot.core
 
 import com.karumi.kotlinsnapshot.KotlinSnapshot
 import com.karumi.kotlinsnapshot.matchWithSnapshot
-import junit.framework.TestCase.assertEquals
 import org.junit.Test
 import java.text.SimpleDateFormat
 import java.time.LocalDate
