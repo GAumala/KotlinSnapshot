@@ -1,9 +1,14 @@
 package com.karumi.kotlinsnapshot.core
 
 import com.karumi.kotlinsnapshot.matchWithSnapshot
+import junit.framework.TestCase.fail
 import org.junit.Test
 
 class CameraTest {
+
+    companion object {
+        private const val WILL_NOT_MATCH = "will not match"
+    }
 
     data class User(val id: Int, val name: String)
 
@@ -41,5 +46,20 @@ class CameraTest {
     fun should_take_snapshots_of_null_values() {
         val nullString: String? = null
         nullString.matchWithSnapshot("should take snapshots of null values")
+    }
+
+    @Test(expected = SnapshotException::class)
+    fun should_throw_snapshot_exception_when_not_match() {
+        WILL_NOT_MATCH.matchWithSnapshot("should throw snapshot exception when not match")
+    }
+
+    @Test
+    fun `should_throw_snapshot_exception_with_junit_diff_message`() {
+        try {
+            WILL_NOT_MATCH.matchWithSnapshot("should throw snapshot exception when not match")
+            fail("should throw snapshot exception to match actual value")
+        } catch (snapshotException: SnapshotException) {
+            snapshotException.message!!.matchWithSnapshot()
+        }
     }
 }
