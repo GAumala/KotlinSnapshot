@@ -36,4 +36,10 @@ class CameraTest {
         val json = """{"name":"gabriel","id":5}"""
         json.matchWithSnapshot("should take snapshot of a json string")
     }
+
+    @Test
+    fun should_take_snapshots_of_null_values() {
+        val nullString: String? = null
+        nullString.matchWithSnapshot("should take snapshots of null values")
+    }
 }

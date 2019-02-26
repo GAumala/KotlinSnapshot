@@ -16,7 +16,7 @@ buildscript {
     mavenCentral()
   }
   dependencies {
-    classpath 'com.karumi.kotlinsnapshot:plugin:2.0.0'
+    classpath 'com.karumi.kotlinsnapshot:plugin: version '2.1.0''
   }
 }
 
@@ -143,6 +143,12 @@ class CustomKotlinJsonSerialization: SerializationModule {
 ```
 
 ### Changelog
+
+#### 2.1.0 Improve IntelliJ and JUnit 5 support:
+
+* Support for nullable types.
+* Improved IntelliJ Support.
+* Add JUnit 5 Support
 
 #### 2.0.0 Improve the serialization format:
 
