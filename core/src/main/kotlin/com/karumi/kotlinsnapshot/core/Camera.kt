@@ -5,7 +5,7 @@ import org.bitbucket.cowwoc.diffmatchpatch.DiffMatchPatch
 import java.io.File
 import java.nio.file.Paths
 
-internal class Camera (
+internal class Camera(
     private val serializationModule: SerializationModule,
     private val extractor: TestCaseExtractor,
     private val testClassAsDirectory: Boolean = false,
@@ -62,7 +62,7 @@ internal class Camera (
             writeSnapshot(true, snapshotFile, value)
         else if (hasChanged) {
             val msg = DiffPrinter.toReadableConsoleMessage(snapshotFile.name, diffs)
-            throw SnapshotException(diffs, msg)
+            throw SnapshotException(diffs, msg, snapshotContents, valueString)
         }
     }
 

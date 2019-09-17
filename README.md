@@ -144,6 +144,8 @@ class CustomKotlinJsonSerialization: SerializationModule {
 
 ### Changelog
 
+#### 2.1.1 Fixed JUnit 5 support:
+
 #### 2.1.0 Improve IntelliJ and JUnit 5 support:
 
 * Support for nullable types.
