@@ -16,7 +16,7 @@ buildscript {
     mavenCentral()
   }
   dependencies {
-    classpath 'com.karumi.kotlinsnapshot:plugin: version '2.1.1''
+    classpath 'com.karumi.kotlinsnapshot:plugin: version '2.2.0''
   }
 }
 
@@ -143,6 +143,11 @@ class CustomKotlinJsonSerialization: SerializationModule {
 ```
 
 ### Changelog
+
+#### 2.2.0 Improve diff coloring:
+
+* User more conventional diff coloring
+* Support window line endings replacing '\r\n' to '\n'
 
 #### 2.1.1 Fixed JUnit 5 support:
 
