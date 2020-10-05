@@ -8,12 +8,12 @@ plugins {
 }
 
 group = "com.karumi.kotlinsnapshot"
-version = "0.0.1-SNAPSHOT"
+version = "0.0.1"
 java.sourceCompatibility = JavaVersion.VERSION_11
 
 buildscript {
     dependencies {
-        classpath("com.karumi.kotlinsnapshot:plugin:2.2.1-SNAPSHOT")
+        classpath("com.karumi.kotlinsnapshot:plugin:2.2.1")
     }
     repositories {
         maven { url  = uri("../repo") }
