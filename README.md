@@ -84,6 +84,12 @@ In order to update snapshots from the command line, you just need to execute one
 ./gradlew updateSnapshots
 ```
 
+or, for newer versions of Gradle:
+
+```
+updateSnapshots=1 ./gradlew test
+```
+
 ## Purging Snapshots
 
 As you rename snapshots, old unused snapshots may remain in your project. You can delete all existing snapshots and rebuild the ones that are actually used using the "purgeSnapshots" gradle task
@@ -92,6 +98,11 @@ As you rename snapshots, old unused snapshots may remain in your project. You ca
 ./gradlew purgeSnapshots
 ```
 
+or, for newer versions of Gradle:
+
+```
+purgeSnapshots=1 ./gradlew test
+```
 ## Contributing
 
 ### Linting and formatting

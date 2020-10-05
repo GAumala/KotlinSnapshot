@@ -25,13 +25,20 @@ dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
 }
 
-compileGroovy.dependsOn.remove('compileJava')
-compileKotlin.dependsOn compileGroovy
-compileKotlin.classpath += files(compileGroovy.destinationDir)
-classes.dependsOn compileKotlin
+tasks.named('compileGroovy') {
+    // Groovy only needs the declared dependencies
+    // (and not longer the output of compileJava)
+    classpath = sourceSets.main.compileClasspath
+}
+
+tasks.named('compileKotlin') {
+    // Kotlin also depends on the result of Groovy compilation
+    // (which automatically makes it depend of compileGroovy)
+    classpath += files(sourceSets.main.groovy.classesDirectory)
+}
+
 compileKotlin {
     kotlinOptions.jvmTarget = "1.8"
-    classpath = classpath.plus(files(compileGroovy.destinationDir))
 }
 compileTestKotlin {
     kotlinOptions.jvmTarget = "1.8"
