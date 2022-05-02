@@ -87,7 +87,7 @@ In order to update snapshots from the command line, you just need to execute one
 or, for newer versions of Gradle:
 
 ```
-updateSnapshots=1 ./gradlew test
+updateSnapshots=true ./gradlew test
 ```
 
 ## Purging Snapshots
@@ -101,8 +101,16 @@ As you rename snapshots, old unused snapshots may remain in your project. You ca
 or, for newer versions of Gradle:
 
 ```
-purgeSnapshots=1 ./gradlew test
+purgeSnapshots=true ./gradlew test
 ```
+
+## Failing on Missing Snapshots
+In order to fail if a snapshot does not exist, you just need to execute your tests like this:
+
+```
+failOnMissingSnapshots=true ./gradlew test
+```
+
 ## Contributing
 
 ### Linting and formatting

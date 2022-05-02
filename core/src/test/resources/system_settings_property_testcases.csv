@@ -1,0 +1,6 @@
+input,expectedOutcome
+0,false
+false,false
+1,true
+true,true
+abc,0

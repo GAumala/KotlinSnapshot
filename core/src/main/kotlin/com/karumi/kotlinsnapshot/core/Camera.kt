@@ -2,6 +2,7 @@ package com.karumi.kotlinsnapshot.core
 
 import com.karumi.kotlinsnapshot.exceptions.TestNameNotFoundException
 import org.bitbucket.cowwoc.diffmatchpatch.DiffMatchPatch
+import org.bitbucket.cowwoc.diffmatchpatch.DiffMatchPatch.Operation.INSERT
 import java.io.File
 import java.nio.file.Paths
 
@@ -9,14 +10,17 @@ internal class Camera(
     private val serializationModule: SerializationModule,
     private val extractor: TestCaseExtractor,
     private val testClassAsDirectory: Boolean = false,
-    private val relativePath: String = ""
+    private val relativePath: String = "",
+    private val snapshottingProperties: SnapshottingProperties = SystemSnapshottingProperties(
+        JavaSystem
+    )
 ) {
     private val snapshotDir: File
     private val dmp = DiffMatchPatch()
 
     init {
         snapshotDir = createSnapshotDir(relativePath)
-        purgeSnapshotsIfNeeded(snapshotDir)
+        purgeSnapshotsIfNeeded(snapshotDir, snapshottingProperties)
     }
 
     fun matchWithSnapshot(value: Any?, snapshotName: String? = null) {
@@ -28,7 +32,16 @@ internal class Camera(
         if (snapshotFile.exists())
             matchValueWithExistingSnapshot(snapshotFile, value)
         else
+            handleMissingSnapshot(snapshotFile, value)
+    }
+
+    private fun handleMissingSnapshot(snapshotFile: File, value: Any?) {
+        if (snapshottingProperties.shouldFailOnMissingSnapshots()) {
+            val diffs = listOf(DiffMatchPatch.Diff(INSERT, serializationModule.serialize(value)))
+            throw SnapshotException(diffs, "Snapshot file does not exist.", snapshotFile.name, "")
+        } else {
             writeSnapshot(false, snapshotFile, value)
+        }
     }
 
     private fun getFile(testCaseName: TestCaseName): File =
@@ -46,10 +59,6 @@ internal class Camera(
             File(snapshotDir, "$testCaseName.snap")
         }
 
-    private val shouldUpdateSnapshots: Boolean by lazy {
-        System.getenv("updateSnapshots") == "1" || System.getProperty("updateSnapshots") == "1"
-    }
-
     private fun differsFromSnapshot(diffs: List<DiffMatchPatch.Diff>): Boolean =
         diffs.find { diff -> diff.operation != DiffMatchPatch.Operation.EQUAL } != null
 
@@ -59,7 +68,7 @@ internal class Camera(
         val valueString = serializationModule.serialize(value)
         val diffs = dmp.diffMain(snapshotContents, valueString)
         val hasChanged = differsFromSnapshot(diffs)
-        if (hasChanged && shouldUpdateSnapshots)
+        if (hasChanged && snapshottingProperties.shouldUpdateSnapshots())
             writeSnapshot(true, snapshotFile, value)
         else if (hasChanged) {
             val msg = DiffPrinter.toReadableConsoleMessage(snapshotFile.name, diffs)
@@ -88,12 +97,12 @@ internal class Camera(
             return snapshotDir
         }
 
-        fun snapshotPurgingEnabled(): Boolean =
-            System.getenv("purgeSnapshots") == "1" || System.getProperty("purgeSnapshots") == "1"
-
-        fun purgeSnapshotsIfNeeded(snapshotDir: File) {
+        fun purgeSnapshotsIfNeeded(
+            snapshotDir: File,
+            snapshottingProperties: SnapshottingProperties
+        ) {
             val pathToPurge = snapshotDir.absolutePath
-            val shouldPurge = snapshotPurgingEnabled() &&
+            val shouldPurge = snapshottingProperties.isSnapshotPurgingEnabled() &&
                 !purgedDirectories.contains(pathToPurge)
 
             if (shouldPurge) {
@@ -108,10 +117,12 @@ internal class Camera(
         if (testCaseTrace != null) {
             return TestCaseName(testCaseTrace.className, testCaseTrace.methodName)
         } else {
-            throw TestNameNotFoundException("Kotlin Snapshot library couldn't find the name " +
-                "of the test. Review if the test case file or the spec file contains the word " +
-                "test or spec or specify a snapshot name manually, this is a requirement needed " +
-                "to use Kotlin Snapshot")
+            throw TestNameNotFoundException(
+                "Kotlin Snapshot library couldn't find the name of the test. " +
+                    "Review if the test case file or the spec file contains the word " +
+                    "test or spec or specify a snapshot name manually, " +
+                    "this is a requirement needed to use Kotlin Snapshot"
+            )
         }
     }
 
