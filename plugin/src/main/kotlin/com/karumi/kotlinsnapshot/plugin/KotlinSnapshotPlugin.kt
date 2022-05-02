@@ -29,7 +29,7 @@ open class KotlinSnapshotPlugin : Plugin<Project> {
         project.gradle.addListener(object : DependencyResolutionListener {
             override fun beforeResolve(dependencies: ResolvableDependencies) {
                 val dependency = project.dependencies
-                    .create("com.karumi.kotlinsnapshot:core:2.2.3")
+                    .create("com.karumi.kotlinsnapshot:core:2.2.4-SNAPSHOT")
                 project.dependencies.add("testImplementation", dependency)
                 project.gradle.removeListener(this)
             }

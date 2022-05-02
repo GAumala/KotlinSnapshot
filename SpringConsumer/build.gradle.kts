@@ -13,7 +13,7 @@ java.sourceCompatibility = JavaVersion.VERSION_11
 
 buildscript {
     dependencies {
-        classpath("com.karumi.kotlinsnapshot:plugin:2.2.3")
+        classpath("com.karumi.kotlinsnapshot:plugin:2.2.4-SNAPSHOT")
     }
     repositories {
         maven { url  = uri("../repo") }
